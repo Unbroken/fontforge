@@ -3712,6 +3712,12 @@ static void setint16(int16_t *val,Context *c) {
 	*val = c->a.vals[2].u.ival;
 }
 
+static void setint8(int8_t *val,Context *c) {
+    if ( c->a.vals[2].type!=v_int )
+		ScriptError(c,"Bad argument type");
+    *val = c->a.vals[2].u.ival;
+}
+
 static void setss16(int16_t *val,SplineFont *sf,Context *c) {
     if ( c->a.vals[2].type!=v_int ) {
 	c->error = ce_badargtype;
@@ -3747,6 +3753,8 @@ static void bSetOS2Value(Context *c) {
 	    sf->pfminfo.stylemap = c->a.vals[2].u.ival;
     } else if ( strmatch(c->a.vals[1].u.sval,"FSType")==0 ) {
 	setint16(&sf->pfminfo.fstype,c);
+    } else if ( strmatch(c->a.vals[1].u.sval,"FPMFamily")==0 ) {
+	setint8(&sf->pfminfo.pfmfamily,c);
     } else if ( strmatch(c->a.vals[1].u.sval,"IBMFamily")==0 ) {
 	setint16(&sf->pfminfo.os2_family_class,c);
     } else if ( strmatch(c->a.vals[1].u.sval,"VendorID")==0 ) {
